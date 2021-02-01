@@ -5,7 +5,8 @@
  */
 var express = require("express");
 var app = express();
-app.use(express.logger());
+const SteamUser = require('../index.js'); // Replace this with `require('steam-user');` if used outside of the module directory
+var client = new SteamUser();
 
 
 
