@@ -16,78 +16,84 @@ app.listen(port, function() {
 });
 
 app.get('/', function(request, response) {
-	client.logOn({
-		"accountName": "konstant_s18",
-		"password": "Php123123"
-	});
 
-	client.on('loggedOn', function(details) {
-		console.log("Logged into Steam as " + client.steamID.getSteam3RenderedID());
-		client.setPersona(SteamUser.EPersonaState.Online);
-		client.gamesPlayed(440);
-	});
 
-	client.on('error', function(e) {
-		// Some error occurred during logon
-		console.log(e);
-	});
+	if(request.query.login && request.query.pass){
+		client.logOn({
+			"accountName": request.query.login,
+			"password": request.query.pass
+		});
 
-	client.on('webSession', function(sessionID, cookies) {
-		console.log("Got web session");
-		document.write(client);
-		// Do something with these cookies if you wish
-	});
+		client.httpProxy = "http://184.185.2.103:4145";
 
-	client.on('newItems', function(count) {
-		console.log(count + " new items in our inventory");
-	});
+		client.on('loggedOn', function(details) {
+			console.log("Logged into Steam as " + client.steamID.getSteam3RenderedID());
+			client.setPersona(SteamUser.EPersonaState.Online);
+			client.gamesPlayed(440);
+		});
 
-	client.on('emailInfo', function(address, validated) {
-		console.log("Our email address is " + address + " and it's " + (validated ? "validated" : "not validated"));
-	});
+		client.on('error', function(e) {
+			// Some error occurred during logon
+			console.log(e);
+		});
 
-	client.on('wallet', function(hasWallet, currency, balance) {
-		console.log("Our wallet balance is " + SteamUser.formatCurrency(balance, currency));
-	});
+		client.on('webSession', function(sessionID, cookies) {
+			console.log("Got web session");
+			response.send(cookies);
+			// Do something with these cookies if you wish
+		});
 
-	client.on('accountLimitations', function(limited, communityBanned, locked, canInviteFriends) {
-		var limitations = [];
+		client.on('newItems', function(count) {
+			console.log(count + " new items in our inventory");
+		});
 
-		if (limited) {
-			limitations.push('LIMITED');
-		}
+		client.on('emailInfo', function(address, validated) {
+			console.log("Our email address is " + address + " and it's " + (validated ? "validated" : "not validated"));
+		});
 
-		if (communityBanned) {
-			limitations.push('COMMUNITY BANNED');
-		}
+		client.on('wallet', function(hasWallet, currency, balance) {
+			console.log("Our wallet balance is " + SteamUser.formatCurrency(balance, currency));
+		});
 
-		if (locked) {
-			limitations.push('LOCKED');
-		}
+		client.on('accountLimitations', function(limited, communityBanned, locked, canInviteFriends) {
+			var limitations = [];
 
-		if (limitations.length === 0) {
-			console.log("Our account has no limitations.");
-		} else {
-			console.log("Our account is " + limitations.join(', ') + ".");
-		}
+			if (limited) {
+				limitations.push('LIMITED');
+			}
 
-		if (canInviteFriends) {
-			console.log("Our account can invite friends.");
-		}
-	});
+			if (communityBanned) {
+				limitations.push('COMMUNITY BANNED');
+			}
 
-	client.on('vacBans', function(numBans, appids) {
-		console.log("We have " + numBans + " VAC ban" + (numBans == 1 ? '' : 's') + ".");
-		if (appids.length > 0) {
-			console.log("We are VAC banned from apps: " + appids.join(', '));
-		}
-	});
+			if (locked) {
+				limitations.push('LOCKED');
+			}
 
-	client.on('licenses', function(licenses) {
-		console.log("Our account owns " + licenses.length + " license" + (licenses.length == 1 ? '' : 's') + ".");
-	});
+			if (limitations.length === 0) {
+				console.log("Our account has no limitations.");
+			} else {
+				console.log("Our account is " + limitations.join(', ') + ".");
+			}
 
-  	response.send('Hello World!');
+			if (canInviteFriends) {
+				console.log("Our account can invite friends.");
+			}
+		});
+
+		client.on('vacBans', function(numBans, appids) {
+			console.log("We have " + numBans + " VAC ban" + (numBans == 1 ? '' : 's') + ".");
+			if (appids.length > 0) {
+				console.log("We are VAC banned from apps: " + appids.join(', '));
+			}
+		});
+
+		client.on('licenses', function(licenses) {
+			console.log("Our account owns " + licenses.length + " license" + (licenses.length == 1 ? '' : 's') + ".");
+		});
+	}
+	
+  	
 });
 
 
