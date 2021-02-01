@@ -3,9 +3,19 @@
  *
  * Simply logs into Steam using account credentials, goes online on friends, and launches Team Fortress 2
  */
-
+const express = require('express');
+const app = express();
 const SteamUser = require('../index.js'); // Replace this with `require('steam-user');` if used outside of the module directory
 var client = new SteamUser();
+
+
+
+app.get('/', function (req, res) {
+	res.send('Hello World');
+});
+ 
+app.listen(5000);
+
 
 client.logOn({
 	"accountName": "konstant_s18",
