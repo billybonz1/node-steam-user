@@ -92,7 +92,7 @@ app.get('/', function(request, response) {
 			console.log("Our account owns " + licenses.length + " license" + (licenses.length == 1 ? '' : 's') + ".");
 		});
 	}else{
-		response.send("error");
+		response.send(request.query);
 	}
 	
   	
