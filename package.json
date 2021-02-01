@@ -42,6 +42,7 @@
 		"steamcommunity": "^3.39.0"
 	},
 	"scripts": {
+		"start": "node examples/basicbot",
 		"prepublishOnly": "node scripts/prepublish.js",
 		"generate-enums": "node scripts/generate-enums.js",
 		"generate-protos": "node scripts/generate-protos.js"

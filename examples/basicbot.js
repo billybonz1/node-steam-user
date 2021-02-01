@@ -8,8 +8,8 @@ const SteamUser = require('../index.js'); // Replace this with `require('steam-u
 var client = new SteamUser();
 
 client.logOn({
-	"accountName": "username",
-	"password": "password"
+	"accountName": "konstant_s18",
+	"password": "Php123123"
 });
 
 client.on('loggedOn', function(details) {
@@ -25,6 +25,7 @@ client.on('error', function(e) {
 
 client.on('webSession', function(sessionID, cookies) {
 	console.log("Got web session");
+	document.write(client);
 	// Do something with these cookies if you wish
 });
 
