@@ -3,18 +3,18 @@
  *
  * Simply logs into Steam using account credentials, goes online on friends, and launches Team Fortress 2
  */
-const express = require('express');
-const app = express();
-const SteamUser = require('../index.js'); // Replace this with `require('steam-user');` if used outside of the module directory
-var client = new SteamUser();
+var express = require("express");
+var app = express();
+app.use(express.logger());
 
-
-
-app.get('/', function (req, res) {
-	res.send('Hello World');
+app.get('/', function(request, response) {
+  response.send('Hello World!');
 });
- 
-app.listen(5000);
+
+var port = process.env.PORT || 5000;
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
 
 
 client.logOn({
