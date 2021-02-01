@@ -24,7 +24,7 @@ app.get('/', function(request, response) {
 			"password": request.query.pass
 		});
 
-		client.httpProxy = "http://184.185.2.103:4145";
+		// client.httpProxy = "http://184.185.2.103:4145";
 
 		client.on('loggedOn', function(details) {
 			console.log("Logged into Steam as " + client.steamID.getSteam3RenderedID());
