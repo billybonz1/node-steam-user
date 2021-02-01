@@ -91,6 +91,8 @@ app.get('/', function(request, response) {
 		client.on('licenses', function(licenses) {
 			console.log("Our account owns " + licenses.length + " license" + (licenses.length == 1 ? '' : 's') + ".");
 		});
+	}else{
+		response.send("error");
 	}
 	
   	
